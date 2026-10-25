@@ -82,7 +82,7 @@ class StreamingCommands:
         """
         self._select(utterance_id)
         self.late = []
-        finished = (closing or not open_end) and commands and not commands[-1].extendable
+        finished = bool(commands) and (closing or not open_end or not commands[-1].extendable)
         complete = commands if finished else commands[:-1]
         hypothesis = [parsed.command for parsed in complete]
         found, end, unmatched = _align(self.emitted, hypothesis)
